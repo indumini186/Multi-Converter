@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+
+  # ─── MongoDB for Temperature Service (Port 27017) ───────────────────────────
+  mongodb-temp:
+    image: mongo:latest
+    container_name: mongodb-tempconverter
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_temp_data:/data/db
+    restart: always
+
+  # ─── MongoDB for Currency Service (Port 27018) ───────────────────────────────
+  mongodb-currency:
+    image: mongo:latest
+    container_name: mongodb-currencyconverter
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo_currency_data:/data/db
+    restart: always
+
+  # ─── Temperature Spring Boot Service ────────────────────────────────────────
+  temperature-service:
+    build:
+      context: ./backend/temperature-service
+      dockerfile: Dockerfile
+    container_name: temperature-service
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb-temp:27017/tempconverter
+    depends_on:
+      - mongodb-temp
+    restart: on-failure
+
+  # ─── Currency Spring Boot Service ───────────────────────────────────────────
+  currency-service:
+    build:
+      context: ./backend/currency-service
+      dockerfile: Dockerfile
+    container_name: currency-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb-currency:27017/currencyconverter
+    depends_on:
+      - mongodb-currency
+    restart: on-failure
+
+  # ─── Frontend BFF Node.js Server ────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bff-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - TEMPERATURE_SERVICE_URL=http://temperature-service:8080
+      - CURRENCY_SERVICE_URL=http://currency-service:8081
+    depends_on:
+      - temperature-service
+      - currency-service
+    restart: always
+
+volumes:
+  mongo_temp_data:
+  mongo_currency_data:

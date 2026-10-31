@@ -1,0 +1,440 @@
+{
+	"info": {
+		"_postman_id": "bfd0d82d-45db-44a3-868c-ff7b63f25b29",
+		"name": "Multi-Converter API",
+		"description": "API collection for testing Multi-Converter Backend Services (Direct & BFF Gateway)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. BFF Gateway (Port 3000)",
+			"item": [
+				{
+					"name": "Temperature - Convert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/temperature/convert?value=100&unit=CELCIUS",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"temperature",
+								"convert"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "100"
+								},
+								{
+									"key": "unit",
+									"value": "CELCIUS",
+									"description": "CELCIUS or FAHRENHEIT"
+								}
+							]
+						},
+						"description": "Converts temperature through the BFF gateway. The gateway automatically injects the X-API-Key."
+					},
+					"response": []
+				},
+				{
+					"name": "Temperature - Get All Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/temperature/logs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"temperature",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Temperature - Get Filtered Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/temperature/logs/filter?unit=CELCIUS&from=2026-07-01T00:00:00",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"temperature",
+								"logs",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "unit",
+									"value": "CELCIUS"
+								},
+								{
+									"key": "from",
+									"value": "2026-07-01T00:00:00"
+								},
+								{
+									"key": "to",
+									"value": "2026-07-31T23:59:59",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Temperature - Safety Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/temperature/safety-check?value=45&unit=CELCIUS",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"temperature",
+								"safety-check"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "45"
+								},
+								{
+									"key": "unit",
+									"value": "CELCIUS"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Currency - Convert",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/currency/convert?amount=250&sourceCurrency=USD",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"currency",
+								"convert"
+							],
+							"query": [
+								{
+									"key": "amount",
+									"value": "250"
+								},
+								{
+									"key": "sourceCurrency",
+									"value": "USD",
+									"description": "USD or LKR"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Currency - Get All Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/currency/logs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"currency",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Currency - Get Filtered Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/currency/logs/filter?currency=USD",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"currency",
+								"logs",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "currency",
+									"value": "USD"
+								},
+								{
+									"key": "from",
+									"value": "2026-07-01T00:00:00",
+									"disabled": true
+								},
+								{
+									"key": "to",
+									"value": "2026-07-31T23:59:59",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API Keys - Get All Keys",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/keys",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"keys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API Keys - Create Key",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clientName\": \"Postman Client\",\n  \"keyValue\": \"MY-SECRET-POSTMAN-KEY-789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/keys",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"keys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API Keys - Toggle Active Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/keys/<REPLACE_WITH_KEY_ID>/toggle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"keys",
+								"<REPLACE_WITH_KEY_ID>",
+								"toggle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API Keys - Delete Key",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/keys/<REPLACE_WITH_KEY_ID>",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"keys",
+								"<REPLACE_WITH_KEY_ID>"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Temperature Service Direct (Port 8080)",
+			"item": [
+				{
+					"name": "Convert Temperature (Requires API Key)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-API-Key",
+								"value": "SUPER-SECRET-DEV-KEY-123",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/temperature/convert?value=32&unit=FAHRENHEIT",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"temperature",
+								"convert"
+							],
+							"query": [
+								{
+									"key": "value",
+									"value": "32"
+								},
+								{
+									"key": "unit",
+									"value": "FAHRENHEIT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Temperature Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/temperature/logs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"temperature",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Currency Service Direct (Port 8081)",
+			"item": [
+				{
+					"name": "Convert Currency",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/currency/convert?amount=1500&sourceCurrency=LKR",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"currency",
+								"convert"
+							],
+							"query": [
+								{
+									"key": "amount",
+									"value": "1500"
+								},
+								{
+									"key": "sourceCurrency",
+									"value": "LKR"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Currency Logs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8081/api/currency/logs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8081",
+							"path": [
+								"api",
+								"currency",
+								"logs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

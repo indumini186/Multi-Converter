@@ -1,0 +1,22 @@
+[
+  {
+    "keyValue": "SUPER-SECRET-DEV-KEY-123",
+    "clientName": "Developer App (OmniConvert BFF)",
+    "active": true
+  },
+  {
+    "keyValue": "EXPIRED-HACKER-KEY-999",
+    "clientName": "Expired Hacker App (For Testing)",
+    "active": false
+  },
+  {
+    "keyValue": "PRODUCTION-MOBILE-APP-KEY-456",
+    "clientName": "Production Mobile App Client",
+    "active": true
+  },
+  {
+    "keyValue": "PARTNER-INTEGRATION-KEY-789",
+    "clientName": "Partner Third-Party Integration",
+    "active": true
+  }
+]

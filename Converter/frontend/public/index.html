@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi Converter | Currency & Temperature Converter</title>
+    <meta name="description" content="Fast, accurate currency and temperature conversions with full audit logging. Powered by a secure microservice backend.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ambient-background kept for structure, hidden via CSS in light theme -->
+    <div class="ambient-background" aria-hidden="true"></div>
+
+    <main class="app-container">
+
+        <!-- ── Header ──────────────────────────────────────────────── -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="logo-badge">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <h1>Multi <span>Converter</span></h1>
+            </div>
+            <p>Instant currency &amp; temperature conversions — backed by a live database</p>
+        </header>
+
+        <!-- ── Main Card ───────────────────────────────────────────── -->
+        <section class="glass-card">
+
+            <!-- Navigation Tabs -->
+            <nav class="tabs-nav" aria-label="Converter tabs" role="tablist">
+                <button class="tab-trigger active"
+                        data-tab="currency-panel"
+                        role="tab"
+                        aria-selected="true"
+                        aria-controls="currency-panel"
+                        id="tab-currency">
+                    <i class="fa-solid fa-circle-dollar-to-slot"></i>
+                    <span>Currency</span>
+                </button>
+                <button class="tab-trigger"
+                        data-tab="temperature-panel"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="temperature-panel"
+                        id="tab-temperature">
+                    <i class="fa-solid fa-temperature-half"></i>
+                    <span>Temperature</span>
+                </button>
+                <button class="tab-trigger"
+                        data-tab="logs-panel"
+                        role="tab"
+                        aria-selected="false"
+                        aria-controls="logs-panel"
+                        id="tab-logs">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Audit Logs</span>
+                </button>
+            </nav>
+
+            <!-- ══════════════════════════════════════════════════════
+                 CURRENCY PANEL
+            ══════════════════════════════════════════════════════ -->
+            <div id="currency-panel" class="tab-panel active" role="tabpanel" aria-labelledby="tab-currency">
+
+                <form id="currency-form" class="converter-form" novalidate>
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="currency-amount">Amount to Convert</label>
+                            <div class="input-container">
+                                <span class="input-icon" id="currency-input-decorator">$</span>
+                                <input
+                                    type="number"
+                                    id="currency-amount"
+                                    placeholder="0.00"
+                                    step="0.01"
+                                    min="0"
+                                    required
+                                    aria-label="Amount to convert">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="currency-source">Conversion Direction</label>
+                            <div class="input-container select-container">
+                                <span class="input-icon">
+                                    <i class="fa-solid fa-rotate"></i>
+                                </span>
+                                <select id="currency-source" class="select-field" aria-label="Select currency direction">
+                                    <option value="USD">USD → LKR</option>
+                                    <option value="LKR">LKR → USD</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="currency-submit">
+                        <span>Convert Currency</span>
+                        <i class="fa-solid fa-arrow-right-long btn-arrow"></i>
+                    </button>
+                </form>
+
+                <!-- Currency Result -->
+                <div class="result-card" id="currency-result-card">
+                    <span class="result-label">Converted Amount</span>
+                    <div class="result-display">
+                        <span class="result-symbol" id="currency-output-symbol">Rs.</span>
+                        <span class="result-number" id="currency-output-value">0.00</span>
+                    </div>
+                    <div class="rate-badge">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span id="rate-info">Exchange Rate: 1 USD = 300.00 LKR</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ══════════════════════════════════════════════════════
+                 TEMPERATURE PANEL
+            ══════════════════════════════════════════════════════ -->
+            <div id="temperature-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-temperature">
+
+                <form id="temperature-form" class="converter-form" novalidate>
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label for="temp-value">Temperature Value</label>
+                            <div class="input-container">
+                                <span class="input-icon" id="temp-input-decorator">&deg;C</span>
+                                <input
+                                    type="number"
+                                    id="temp-value"
+                                    placeholder="Enter value"
+                                    step="0.1"
+                                    required
+                                    aria-label="Temperature value">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="temp-unit">From Unit</label>
+                            <div class="input-container select-container">
+                                <span class="input-icon">
+                                    <i class="fa-solid fa-thermometer-half"></i>
+                                </span>
+                                <select id="temp-unit" class="select-field" aria-label="Select temperature unit">
+                                    <option value="C">Celsius (&deg;C)</option>
+                                    <option value="F">Fahrenheit (&deg;F)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="temperature-submit">
+                        <span>Convert Temperature</span>
+                        <i class="fa-solid fa-arrow-right-long btn-arrow"></i>
+                    </button>
+                </form>
+
+                <!-- Temperature Result -->
+                <div class="result-card" id="temp-result-card">
+                    <span class="result-label">Converted Result</span>
+                    <div class="result-display">
+                        <span class="result-number" id="temp-output-value">0.00</span>
+                        <span class="result-symbol" id="temp-output-unit">&deg;F</span>
+                    </div>
+                    <div class="rate-badge">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <span id="temp-info-text">Select a unit and convert</span>
+                    </div>
+                </div>
+
+                <!-- Safety Warning Banner -->
+                <div class="safety-banner" id="safety-warning-banner" role="alert" aria-live="polite">
+                    <div class="safety-icon-wrapper">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div class="safety-content">
+                        <strong class="safety-title">Safety Status</strong>
+                        <p id="safety-warning-text">No active reading</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ══════════════════════════════════════════════════════
+                 AUDIT LOGS PANEL
+            ══════════════════════════════════════════════════════ -->
+            <div id="logs-panel" class="tab-panel" role="tabpanel" aria-labelledby="tab-logs">
+
+                <!-- Row 1: Domain + Direction/Currency filter -->
+                <div class="logs-controls">
+
+                    <div class="control-group">
+                        <label for="log-type">Service</label>
+                        <div class="input-container select-container">
+                            <select id="log-type" class="select-field small" aria-label="Select log type">
+                                <option value="currency">Currency Logs</option>
+                                <option value="temperature">Temperature Logs</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Currency direction filter (visible when currency selected) -->
+                    <div class="control-group" id="currency-log-filter-group">
+                        <label for="currency-log-filter">Currency Filter</label>
+                        <div class="input-container select-container">
+                            <select id="currency-log-filter" class="select-field small" aria-label="Filter by currency direction">
+                                <option value="">All Directions</option>
+                                <option value="USD">USD → LKR</option>
+                                <option value="LKR">LKR → USD</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Temperature unit filter (visible when temperature selected) -->
+                    <div class="control-group" id="temp-log-filter-group" style="display:none;">
+                        <label for="temp-log-filter">Unit Filter</label>
+                        <div class="input-container select-container">
+                            <select id="temp-log-filter" class="select-field small" aria-label="Filter by temperature unit">
+                                <option value="">All Units</option>
+                                <option value="CELCIUS">Celsius → Fahrenheit</option>
+                                <option value="FAHRENHEIT">Fahrenheit → Celsius</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Row 2: Date range pickers -->
+                <div class="logs-date-row">
+                    <div class="control-group">
+                        <label for="log-date-from">From Date</label>
+                        <input
+                            type="date"
+                            id="log-date-from"
+                            class="date-input"
+                            aria-label="Filter from date">
+                    </div>
+                    <div class="control-group">
+                        <label for="log-date-to">To Date</label>
+                        <input
+                            type="date"
+                            id="log-date-to"
+                            class="date-input"
+                            aria-label="Filter to date">
+                    </div>
+                </div>
+
+                <!-- Action bar: Apply filter + result count -->
+                <div class="logs-action-bar">
+                    <button type="button" class="filter-apply-btn" id="apply-filter-btn">
+                        <i class="fa-solid fa-filter"></i>
+                        <span>Apply Filter</span>
+                    </button>
+                    <span class="results-count" id="results-count"></span>
+                </div>
+
+                <!-- Logs Table -->
+                <div class="table-container">
+                    <table class="audit-table" aria-label="Conversion audit logs">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Conversion Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logs-tbody">
+                            <tr>
+                                <td colspan="2" class="empty-state">
+                                    <div class="empty-icon">
+                                        <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                    </div>
+                                    <p>Loading conversion history&hellip;</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Refresh -->
+                <button type="button" class="refresh-btn" id="refresh-logs-btn">
+                    <i class="fa-solid fa-arrow-rotate-right"></i>
+                    <span>Refresh Logs</span>
+                </button>
+
+            </div>
+
+
+        </section>
+
+        <!-- ── Footer ──────────────────────────────────────────────── -->
+        <footer class="app-footer">
+            <p>&copy; 2026 Multi Converter &mdash; Secure BFF architecture &middot; MongoDB &middot; Spring Boot</p>
+        </footer>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

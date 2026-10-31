@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: currencyconv
+  data:
+    mongodb:
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27018/currencyconverter}
+      database: currencyconverter
+
+server:
+  port: 8081
